@@ -12,6 +12,7 @@ export default function Login() {
       <div className='form'>
         <form onSubmit={onSubmit} action="">
             <h1 className='title'>
+              
               Login into your Account
             </h1>
             <input type="email" placeholder='Email'/>
