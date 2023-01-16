@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useStateContext } from '../contexts/ContextProvider'
 
 export default function GuestLayout() {
@@ -9,6 +9,8 @@ export default function GuestLayout() {
     return <Navigate to="/users" />
   }
   return (
-    <div>GuestLayout</div>
+    <div>
+      <Outlet />
+    </div>
   )
 }
