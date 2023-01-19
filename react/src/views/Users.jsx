@@ -18,11 +18,23 @@ export default function Users() {
 
       .then(({data}) => {
         setLoading(false);
-        console.log(data);
+        setUsers(data.data)
       })
       .catch(() => {
         setLoading(false)
       })
+  }
+
+  const onDelete = (user) => {
+    if (!window.confirm("Are you sure you want to delete this user?")) {
+      return
+    }
+
+    axiosClient.delete(`/users/${user.id}`)
+
+    .then(()=> {
+        getUsers();
+    })
   }
 
   return (
@@ -45,20 +57,27 @@ export default function Users() {
             </tr>
           </thead>
 
-          <tbody>
-            {users.map((user)=> {
+          {loading && <tbody>
+            <tr>
+              <td colSpan="5" className='text-center'>Loading......</td>
+            </tr>
+          </tbody>}
+
+          {!loading && <tbody>
+            {users.map(user => (
               <tr>
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.created_at}</td>
                 <td>
-                  <Link to={"/users/"+user.id}>Edit</Link>
+                  <Link className='btn-edit' to={"/users/"+user.id}>Edit</Link>
+                  <button onClick={ ev => onDelete(user) } className='btn-delete'>Delete</button>
                 </td>
               </tr>
-            })}
+            ))}
           </tbody>
-
+          }
         </table>
       
       </div>
